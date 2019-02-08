@@ -1,0 +1,37 @@
+
+<div class="clr-form-control">
+  <label for="select-full" class="clr-control-label">Select a Field</label>
+  <div class="clr-control-container">
+    <div class="clr-select-wrapper">
+      <select id="select-full" class="clr-select" (change)="selecteField($event.target.value)">
+        <option value="0">--None--</option>
+        <option *ngFor="let item of (fields$ | async)" [value]="item.id">{{item.name}}</option>
+      </select>
+      <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+    </div>
+  </div>
+</div>
+
+<div class="clr-form-control">
+  <label for="select-full" class="clr-control-label">Select an Operand</label>
+  <div class="clr-control-container">
+    <div class="clr-select-wrapper">
+      <select id="select-full" class="clr-select">
+        <option *ngFor="let item of operators" [value]="item.id">{{item.name}}</option>
+      </select>
+      <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+    </div>
+  </div>
+</div>
+
+<div class="clr-form-control">
+  <label for="select-full" class="clr-control-label">Select a Value</label>
+  <div class="clr-control-container">
+    <div class="clr-select-wrapper">
+      <select id="select-full" class="clr-select">
+        <option *ngFor="let item of (values$ | async)" [value]="item.id">{{item.label}}</option>
+      </select>
+      <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+    </div>    
+  </div>
+</div>
