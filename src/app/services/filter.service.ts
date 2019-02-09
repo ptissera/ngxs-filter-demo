@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subscriber } from "rxjs";
+import { Observable, Subscriber, of, from } from "rxjs";
 
 import { Field } from "../models/field.model";
 import { CompareOperator } from '../models/compare-operator.model';
@@ -49,10 +49,7 @@ export class FilterService {
   constructor() {}
 
   getFields() {
-    return Observable.create((observer: Subscriber<Field[]>) => {
-      observer.next(this.fields);
-      observer.complete();
-    }).toPromise();
+    return of(this.fields).toPromise();
   }
 
   getCompareOperators(fieldId: string) {
@@ -70,10 +67,7 @@ export class FilterService {
       list =  this.fields[fieldId == '11' ? 0 : 1].autocompleteList;
     }
 
-    return Observable.create((observer: Subscriber<ListItem[]>) => {
-        observer.next(list);
-        observer.complete();
-    }).toPromise();
+    return of(list).toPromise();
   }
 
 }

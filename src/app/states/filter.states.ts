@@ -3,14 +3,15 @@ import { SelectFieldFilterAction, LoadDefaultValuesFilterAction } from '../actio
 import { FilterService } from '../services/filter.service';
 import { CompareOperator } from '../models/compare-operator.model';
 import { Observable, of, Subscriber } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Field } from '../models/field.model';
 import { ListItem } from '../models/list-item.model';
 import { Filter } from '../models/filter.model';
 
 export interface FilterStateModel {
-  fields$: Observable<Field[]>;
-  compareOperators: CompareOperator[];
-  listItemValues$: Observable<ListItem[]>;
+  fields$: any;
+  compareOperators: any;
+  listItemValues$: any;
   filterList: Filter[]
 }
 
@@ -30,7 +31,10 @@ export class FilterState {
 
   @Selector()
   static fieldList(state: FilterStateModel) {
-    return state.fields$;
+    return state.fields$.map(filter => {
+      const {id, name} = filter
+      return {id, name};
+    });
   }
 
   @Selector()
@@ -40,19 +44,21 @@ export class FilterState {
 
   @Selector()
   static valueList(state: FilterStateModel) {
-      return state.listItemValues$;
+      return state.listItemValues$.map(item => {
+        const {id, label} = item
+        return {id, label};
+      });
   }
 
   @Action(SelectFieldFilterAction)
   async SelectFieldState(ctx: StateContext<FilterStateModel>, action: SelectFieldFilterAction) {
     const state = ctx.getState();
+    
     const current = {
       compareOperators: this.filterService.getCompareOperators(action.id),
       listItemValues$: await this.filterService.getListValues(action.id)
     };
-
-    ctx.setState({
-      ...state,
+    ctx.patchState({
       ...current
     });
   }

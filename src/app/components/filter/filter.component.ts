@@ -11,11 +11,11 @@ import { FilterStateModel, FilterState } from '../../states/filter.states';
 })
 export class FilterComponent implements OnInit {
   
-  @Select(FilterState.fieldList)
+  @Select(state => state.filter.fields$)
   fields$;
 
   @Select(FilterState.operatorList)
-  operator$;
+  operators;
 
   @Select(FilterState.valueList)
   values$;
@@ -28,6 +28,5 @@ export class FilterComponent implements OnInit {
 
   selecteField(fieldId) {    
     this.store.dispatch(new SelectFieldFilterAction(fieldId));
-
   }
 }
