@@ -1,0 +1,30 @@
+
+ 
+<br><br>
+<div>
+  <span class="label label-light-blue"> Total of filters <span class="badge badge-light-blue">{{filterTotal | async}}</span></span>
+
+  <table class="table">
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Operator</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let filter of (filters | async)">
+            <td>{{filter.field}}</td>
+            <td>{{filter.operator}}</td>
+            <td>{{filter.value}}</td>
+            <td>
+              <div class="btn-group btn-primary">
+                <button class="btn" (click)="editFilter(filter.id)">Edit</button>                
+                <button class="btn btn-danger" (click)="deleteFilter(filter.id)">Delete</button>
+            </div>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+</div>

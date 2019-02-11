@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { LoadDefaultValuesFilterAction, SelectFieldFilterAction } from '../../actions/filter.actions';
+import { LoadDefaultValuesFilterAction, SelectFieldFilterAction, AddFilterAction } from '../../actions/filter.actions';
 import { FilterStateModel, FilterState } from '../../states/filter.states';
 
 
@@ -27,5 +27,9 @@ export class FilterComponent implements OnInit {
 
   selecteField(fieldId) {
     this.store.dispatch(new SelectFieldFilterAction(fieldId));
+  }
+
+  addFilter() {
+    this.store.dispatch(new AddFilterAction({field: 'f', operator: 'o', value: 'v', id: ''}));
   }
 }
