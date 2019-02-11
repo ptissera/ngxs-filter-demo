@@ -5,28 +5,27 @@ import { FilterStateModel, FilterState } from '../../states/filter.states';
 
 
 @Component({
-  selector: 'ngxs-filter',
+  selector: 'app-ngxs-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.sass']
 })
 export class FilterComponent implements OnInit {
-  
-  @Select(state => state.filter.fields$)
-  fields$;
+  @Select(FilterState.fieldList)
+  fields;
 
   @Select(FilterState.operatorList)
   operators;
 
   @Select(FilterState.valueList)
-  values$;
-  
+  values;
+
   constructor(private store: Store) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.store.dispatch(new LoadDefaultValuesFilterAction());
   }
 
-  selecteField(fieldId) {    
+  selecteField(fieldId) {
     this.store.dispatch(new SelectFieldFilterAction(fieldId));
   }
 }
