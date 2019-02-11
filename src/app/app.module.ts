@@ -10,11 +10,13 @@ import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilterComponent } from './components/filter/filter.component';
 import { FilterState } from './states/filter.states';
+import { FilterListComponent } from './components/filter-list/filter-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FilterComponent
+    FilterComponent,
+    FilterListComponent
   ],
   imports: [
     BrowserModule,

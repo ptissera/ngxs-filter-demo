@@ -1,3 +1,4 @@
+import { Filter } from './../models/filter.model';
 import { ListItem } from './../models/list-item.model';
 import { Field } from './../models/field.model';
 
@@ -5,7 +6,6 @@ export class LoadDefaultValuesFilterAction {
   static readonly type = '[Filter Component] Load default values';
   constructor() {}
 }
-
 
 export class SelectFieldFilterAction {
   static readonly type = '[Filter Component] Select Field';
@@ -30,4 +30,14 @@ export class LoadFieldsErrorFilterAction {
 export class LoadListOfValuesErrorFilterAction {
   static readonly type = '[Filter Component] Load List of values Error';
   constructor(public error: any) {}
+}
+
+export class AddFilterAction {
+  static readonly type = '[Filter Component] Add Filter';
+  constructor(public filter: Filter) {}
+}
+
+export class DeleteFilterAction {
+  static readonly type = '[Filter List Component] Delete Filter';
+  constructor(public idFilter: string) {}
 }

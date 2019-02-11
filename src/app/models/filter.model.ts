@@ -4,7 +4,8 @@ import { FilterValue } from './filter-value.model';
 import { Observable } from 'rxjs';
 
 export interface Filter {
+  id: string;
   field: string;
   operator: string;
-  values: any;
+  value: string;
 }

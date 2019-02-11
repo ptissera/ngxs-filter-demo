@@ -1,8 +1,17 @@
+import { FilterStateModel } from './filter.states';
 import { State, Store, StateContext, Action, Selector } from '@ngxs/store';
-import { SelectFieldFilterAction, LoadDefaultValuesFilterAction, LoadFieldsSuccessFilterAction, LoadFieldsErrorFilterAction, LoadListOfValuesSuccessFilterAction, LoadListOfValuesErrorFilterAction } from '../actions/filter.actions';
+import {
+  SelectFieldFilterAction,
+  LoadDefaultValuesFilterAction,
+  LoadFieldsSuccessFilterAction,
+  LoadFieldsErrorFilterAction,
+  LoadListOfValuesSuccessFilterAction,
+  LoadListOfValuesErrorFilterAction,
+  AddFilterAction,
+  DeleteFilterAction
+} from '../actions/filter.actions';
 import { FilterService } from '../services/filter.service';
 import { CompareOperator } from '../models/compare-operator.model';
-import { Observable, of, Subscriber } from 'rxjs';
 import { Field } from '../models/field.model';
 import { ListItem } from '../models/list-item.model';
 import { Filter } from '../models/filter.model';
@@ -44,6 +53,16 @@ export class FilterState {
         const {id, label} = item;
         return {id, label};
       });
+  }
+
+  @Selector()
+  static filterList(state: FilterStateModel) {
+    return state.filterList;
+  }
+
+  @Selector()
+  static filterTotal(state: FilterStateModel) {
+    return state.filterList.length || 0;
   }
 
   @Action(SelectFieldFilterAction)
@@ -102,9 +121,34 @@ export class FilterState {
     });
   }
 
+  @Action(AddFilterAction)
+  AddFilterState(ctx: StateContext<FilterStateModel>, action: AddFilterAction) {
+    const state = ctx.getState();
+    action.filter.id = 'id-' + Math.random().toString(36).substr(2, 16);
+    const current = {
+      filterList: [...state.filterList, action.filter]
+    };
+    ctx.patchState({
+      ...state,
+      ...current
+    });
+  }
+
   @Action([LoadFieldsErrorFilterAction, LoadListOfValuesErrorFilterAction])
   ErrorHandlerState(ctx: StateContext<FilterStateModel>, actions) {
     console.log(actions);
+  }
+
+  @Action(DeleteFilterAction)
+  DeleteFilterState(ctx: StateContext<FilterStateModel>, action: DeleteFilterAction) {
+    const state = ctx.getState();
+    const current = {
+      filterList: [...[...state.filterList.filter(filter => filter.id !== action.idFilter)]]
+    };
+    ctx.patchState({
+      ...state,
+      ...current
+    });
   }
 }
 
