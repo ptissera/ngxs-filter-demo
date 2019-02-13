@@ -24,6 +24,8 @@
     "@clr/ui": "^1.0.5",
     "@ngxs/devtools-plugin": "^3.3.4",
     "@ngxs/logger-plugin": "^3.3.4",
+    "@ngxs/router-plugin": "^3.3.4",
+    "@ngxs/storage-plugin": "^3.3.4",
     "@ngxs/store": "^3.3.4",
     "@webcomponents/custom-elements": "^1.0.0",
     "core-js": "^2.5.4",
