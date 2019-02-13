@@ -1,7 +1,7 @@
 import { FilterState } from './../../states/filter.states';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { DeleteFilterAction } from '../../actions/filter.actions';
+import { DeleteFilterAction, SelectFilterToEditAction } from '../../actions/filter.actions';
 
 @Component({
   selector: 'app-filter-list',
@@ -21,10 +21,12 @@ export class FilterListComponent implements OnInit {
   ngOnInit() {
   }
 
-  editFilter(idFilter: string) {}
+  editFilter(idFilter: string) {
+    this.store.dispatch(new SelectFilterToEditAction(idFilter));
+  }
 
   deleteFilter(idFilter: string) {
-    this.store.dispatch(new DeleteFilterAction(idFilter)) ;
+    this.store.dispatch(new DeleteFilterAction(idFilter));
   }
 
 }

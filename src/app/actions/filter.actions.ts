@@ -37,7 +37,17 @@ export class AddFilterAction {
   constructor(public filter: Filter) {}
 }
 
+export class EditFilterAction {
+  static readonly type = '[Filter Component] Edit Filter';
+  constructor(public filter: Filter) {}
+}
+
 export class DeleteFilterAction {
   static readonly type = '[Filter List Component] Delete Filter';
+  constructor(public idFilter: string) {}
+}
+
+export class SelectFilterToEditAction {
+  static readonly type = '[Filter List Component] Select Filter to Edit';
   constructor(public idFilter: string) {}
 }

@@ -8,26 +8,31 @@ import {
   LoadListOfValuesSuccessFilterAction,
   LoadListOfValuesErrorFilterAction,
   AddFilterAction,
-  DeleteFilterAction
+  DeleteFilterAction,
+  SelectFilterToEditAction,
+  EditFilterAction
 } from '../actions/filter.actions';
 import { FilterService } from '../services/filter.service';
 import { CompareOperator } from '../models/compare-operator.model';
 import { Field } from '../models/field.model';
 import { ListItem } from '../models/list-item.model';
 import { Filter } from '../models/filter.model';
+import { state } from '@angular/animations';
 
 export interface FilterStateModel {
   fields: Field[];
   compareOperators: CompareOperator[];
   listItemValues: ListItem[];
   filterList: Filter[];
+  selectedFilter: Filter;
 }
 
 export const getAppInitialState = (): FilterStateModel => ({
   fields: [],
   compareOperators: [],
   listItemValues: [],
-  filterList: []
+  filterList: [],
+  selectedFilter: null
 });
 
 @State<FilterStateModel>({
@@ -58,6 +63,11 @@ export class FilterState {
   @Selector()
   static filterList(state: FilterStateModel) {
     return state.filterList;
+  }
+
+  @Selector()
+  static selectedFilter(state: FilterStateModel) {
+    return state.selectedFilter;
   }
 
   @Selector()
@@ -126,6 +136,8 @@ export class FilterState {
     const state = ctx.getState();
     action.filter.id = 'id-' + Math.random().toString(36).substr(2, 16);
     const current = {
+      compareOperators: [],
+      listItemValues: [],
       filterList: [...state.filterList, action.filter]
     };
     ctx.patchState({
@@ -133,6 +145,23 @@ export class FilterState {
       ...current
     });
   }
+
+  @Action(EditFilterAction)
+  EditFilterState(ctx: StateContext<FilterStateModel>, action: EditFilterAction) {
+    const state = ctx.getState();
+    const filterList = [...state.filterList.filter(filter => filter.id !== action.filter.id)];
+    const current = {
+      compareOperators: [],
+      listItemValues: [],
+      filterList: [...filterList, action.filter],
+      selectedFilter: null
+    };
+    ctx.patchState({
+      ...state,
+      ...current
+    });
+  }
+
 
   @Action([LoadFieldsErrorFilterAction, LoadListOfValuesErrorFilterAction])
   ErrorHandlerState(ctx: StateContext<FilterStateModel>, actions) {
@@ -143,7 +172,19 @@ export class FilterState {
   DeleteFilterState(ctx: StateContext<FilterStateModel>, action: DeleteFilterAction) {
     const state = ctx.getState();
     const current = {
-      filterList: [...[...state.filterList.filter(filter => filter.id !== action.idFilter)]]
+      filterList: [...state.filterList.filter(filter => filter.id !== action.idFilter)]
+    };
+    ctx.patchState({
+      ...state,
+      ...current
+    });
+  }
+
+  @Action(SelectFilterToEditAction)
+  SelectFilterToEditState(ctx: StateContext<FilterStateModel>, action: SelectFilterToEditAction) {
+    const state = ctx.getState();
+    const current = {
+      selectedFilter: state.filterList.find(filter => filter.id === action.idFilter)
     };
     ctx.patchState({
       ...state,

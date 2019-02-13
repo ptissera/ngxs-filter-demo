@@ -1,9 +1,9 @@
-<form clrForm clrLayout="horizontal">
+<form clrForm clrLayout="horizontal" [formGroup]="filterForm">
   <div class="clr-form-control">
     <label for="select-field" class="clr-control-label">Select a Field</label>
     <div class="clr-control-container">
       <div class="clr-select-wrapper">
-        <select id="select-field" class="clr-select" (change)="selecteField($event.target.value)">
+        <select id="select-field" formControlName="selectedField" class="clr-select" (change)="selecteField($event.target.value)">
           <option *ngFor="let item of (fields | async)" [value]="item.id">{{item.name}}</option>
         </select>
         <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
@@ -15,7 +15,7 @@
     <label for="select-operator" class="clr-control-label">Select an Operand</label>
     <div class="clr-control-container">
       <div class="clr-select-wrapper">
-        <select id="select-operator" class="clr-select">
+        <select id="select-operator" formControlName="selectedOperator" class="clr-select">
           <option *ngFor="let item of (operators | async)" [value]="item.id">{{item.name}}</option>
         </select>
         <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
@@ -27,7 +27,7 @@
     <label for="select-value" class="clr-control-label">Select a Value</label>
     <div class="clr-control-container">
       <div class="clr-select-wrapper">
-        <select id="select-value" class="clr-select">
+        <select id="select-value" formControlName="selectedItemValue" class="clr-select">
           <option *ngFor="let item of (values | async)" [value]="item.id">{{item.label}}</option>
         </select>
         <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
@@ -35,5 +35,6 @@
     </div>
   </div>
 </form>
-<button class="btn btn-outline" (click)="addFilter()">Add</button>
-
+<button class="btn btn-outline" *ngIf="selectedId==null" [disabled]="filterForm.invalid" (click)="addFilter()">Add</button>
+<button class="btn btn-success-outline" *ngIf="selectedId!=null" [disabled]="filterForm.invalid" (click)="editFilter()">Edit</button>
+<button class="btn btn-danger-outline" *ngIf="selectedId!=null" (click)="cancel()">Cancel</button>
