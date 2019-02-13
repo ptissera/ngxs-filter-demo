@@ -1,5 +1,5 @@
 import { LoginComponent } from './components/login/login.component';
-import { MainComponent } from './components/main/main.component';
+import { FilterLandingComponent } from './components/filter-landing/filter-landing.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -23,7 +23,7 @@ import { AuthenticationState } from './states/authentication.states';
     AppComponent,
     FilterComponent,
     FilterListComponent,
-    MainComponent,
+    FilterLandingComponent,
     LoginComponent
   ],
   imports: [
