@@ -18,6 +18,8 @@ import { FilterListComponent } from './components/filter-list/filter-list.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationState } from './states/authentication.states';
 
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,7 @@ import { AuthenticationState } from './states/authentication.states';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
     NgxsModule.forRoot([FilterState, AuthenticationState], {developmentMode: true}),
@@ -39,7 +42,7 @@ import { AuthenticationState } from './states/authentication.states';
     NgxsRouterPluginModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthenticationState],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
