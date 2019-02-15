@@ -1,5 +1,5 @@
 import { FilterStateModel } from './filter.states';
-import { State, Store, StateContext, Action, Selector } from '@ngxs/store';
+import { State, Store, StateContext, Action, Selector, createSelector } from '@ngxs/store';
 import {
   SelectFieldFilterAction,
   LoadDefaultValuesFilterAction,
@@ -45,6 +45,12 @@ export class FilterState {
   @Selector()
   static fieldList(state: FilterStateModel) {
     return state.fields;
+  }
+
+  static totalFieldsByType(type: string) {
+    return createSelector([FilterState], (state: FilterStateModel) => {
+      return state.fields.filter(s => s.type.indexOf(type) > -1).length || 0;
+    });
   }
 
   @Selector()

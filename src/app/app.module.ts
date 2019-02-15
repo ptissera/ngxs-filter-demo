@@ -1,3 +1,4 @@
+import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     FilterComponent,
-    FilterListComponent
+    FilterListComponent,
+    FilterHeaderComponent
   ],
   imports: [
     BrowserModule,

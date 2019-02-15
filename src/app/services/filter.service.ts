@@ -12,7 +12,7 @@ export class FilterService {
   private fields: Field[] = [
     {
       id: '11',
-      name: 'Name',
+      name: 'Test Name',
       type: 'string',
       autocompleteList: [
         { label: 'Value 1', id: '1' },
@@ -28,6 +28,23 @@ export class FilterService {
         { label: '10', id: '1' },
         { label: '20', id: '2' },
         { label: '30', id: '3' }
+      ]
+    },
+    {
+      id: '13',
+      name: 'Fails',
+      type: 'numeric',
+      autocompleteList: [
+        { label: '10', id: '1' },
+        { label: '20', id: '2' },
+        { label: '30', id: '3' },
+        { label: '40', id: '4' },
+        { label: '50', id: '5' },
+        { label: '60', id: '6' },
+        { label: '70', id: '7' },
+        { label: '80', id: '8' },
+        { label: '90', id: '9' },
+        { label: '100', id: '10' }
       ]
     }
   ];
@@ -54,7 +71,7 @@ export class FilterService {
 
   getCompareOperators(fieldId: string): CompareOperator[] {
     let fieldType = null;
-    if (fieldId === '11' || fieldId === '12') {
+    if (fieldId === '11' || fieldId === '12' || fieldId === '13') {
       fieldType = fieldId === '11' ? 'string' : 'numeric';
     }
 
@@ -63,8 +80,8 @@ export class FilterService {
 
   getListValues(fieldId: string): Observable<ListItem[]> {
     let list = null;
-    if (fieldId === '11' || fieldId === '12') {
-      list =  this.fields[fieldId === '11' ? 0 : 1].autocompleteList;
+    if (fieldId === '11' || fieldId === '12' || fieldId === '13') {
+      list =  this.fields[fieldId === '11' ? 0 : (fieldId === '12' ? 1 : 2)].autocompleteList;
     }
 
     return of(list);

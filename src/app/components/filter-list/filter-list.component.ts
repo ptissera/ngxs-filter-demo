@@ -13,9 +13,6 @@ export class FilterListComponent implements OnInit {
   @Select(FilterState.filterList)
   filters;
 
-  @Select(FilterState.filterTotal)
-  filterTotal;
-
   constructor(private store: Store) { }
 
   ngOnInit() {
